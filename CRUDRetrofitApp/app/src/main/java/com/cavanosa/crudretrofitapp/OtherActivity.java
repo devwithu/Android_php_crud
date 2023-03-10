@@ -54,6 +54,7 @@ public class OtherActivity extends AppCompatActivity
     private void getNameHobby(String name, String hobby)
     {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        //Call<Person> call = apiInterface.getNameHobby(name, hobby);
         Call<Person> call = apiInterface.getNameHobby(name, hobby);
         call.enqueue(new Callback<Person>()
         {

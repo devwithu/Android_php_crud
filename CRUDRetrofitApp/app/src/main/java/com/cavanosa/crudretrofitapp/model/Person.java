@@ -6,10 +6,29 @@ import com.google.gson.annotations.SerializedName;
 public class Person
 {
     @Expose
+    @SerializedName("id") private int id;
+
+    @Expose
     @SerializedName("name") private String name;
 
     @Expose
     @SerializedName("hobby") private String hobby;
+
+    @Expose
+    @SerializedName("success") private Boolean success;
+
+    @Expose
+    @SerializedName("message") private String message;
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
 
     public String getName()
     {
@@ -30,4 +49,25 @@ public class Person
     {
         this.hobby = hobby;
     }
+
+    public Boolean getSuccess()
+    {
+        return success;
+    }
+
+    public void setSuccess(Boolean success)
+    {
+        this.success = success;
+    }
+
+    public String getMessage()
+    {
+        return message;
+    }
+
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
+
 }

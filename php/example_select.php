@@ -7,25 +7,20 @@ require_once 'example_con.php';
 $name = $_GET['name'];
 $hobby = $_GET['hobby'];
 
-$sql = "SELECT * FROM person WHERE name = '$name' AND hobby = '$hobby'";
-//$sql = "SELECT * FROM person WHERE name = 'kim' AND hobby = 'music'";
-//$sql = "SELECT * FROM person ";
+$sql = mysqli_query($con, "SELECT * FROM person");
 
-$result = mysqli_query($con, $sql);
+$response = array();
 
-$data = mysqli_num_rows($result);
-
-if ($data > 0)
+while($row = mysqli_fetch_assoc($sql))
 {
-    $error = "ok";
-    //echo json_encode(array("response" => $error, "name" => "Kim", "hobby" => "music"));
-    echo json_encode(array("response" => $error, "name" => $name, "hobby" => $hobby));
+    array_push($response, array(
+        'id' => $row['id'],
+        'name' => $row['name'],
+        'hobby' => $row['hobby']
+    ));
 }
-else
-{
-    $error = "failed";
-    echo json_encode(array("response" => $error));
-}
+
+echo json_encode($response);
 
 mysqli_close($con);
 

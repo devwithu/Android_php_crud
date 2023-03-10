@@ -2,6 +2,7 @@ package com.cavanosa.crudretrofitapp;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+import android.content.Intent;
 public class MainActivity extends AppCompatActivity
 {
     public static final String TAG = "MainActivity";
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity
     PersonAdapter adapter;
     PersonAdapter.ItemClickListener itemClickListener;
     List<Person> list = new ArrayList<>();
+
+    Menu main_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,6 +64,11 @@ public class MainActivity extends AppCompatActivity
                 String name = list.get(position).getName();
                 String hobby = list.get(position).getHobby();
                 Log.e(TAG, "id : " + id + ", name : " + name + ", hobby : " + hobby);
+                Intent intent = new Intent(MainActivity.this, OtherActivity.class);
+                intent.putExtra("id", id);
+                intent.putExtra("name", name);
+                intent.putExtra("hobby", hobby);
+                startActivity(intent);
             }
         };
 
@@ -74,6 +82,7 @@ public class MainActivity extends AppCompatActivity
                 insertPerson(name, hobby);
             }
         });
+
     }
 
     private void selectPerson()
@@ -108,7 +117,6 @@ public class MainActivity extends AppCompatActivity
         list = lists;
     }
 
-    // ↓ 추가된 부분
     private void insertPerson(String name, String hobby)
     {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);

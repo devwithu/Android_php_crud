@@ -19,9 +19,12 @@ import retrofit2.Response;
 
 public class OtherActivity extends AppCompatActivity
 {
+    public static final String TAG = "OtherActivity";
+
+    TextView other_name, other_hobby;
+    Button update_btn, delete_btn;
+    int id;
     String name, hobby;
-    TextView get_name, get_hobby;
-    Button back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,53 +32,38 @@ public class OtherActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other);
 
-        get_name = (TextView) findViewById(R.id.get_name);
-        get_hobby = (TextView) findViewById(R.id.get_hobby);
-        back_btn = (Button) findViewById(R.id.back_activity);
+        other_name = (TextView) findViewById(R.id.other_name);
+        other_hobby = (TextView) findViewById(R.id.other_hobby);
+        update_btn = (Button) findViewById(R.id.update_btn);
+        delete_btn = (Button) findViewById(R.id.delete_btn);
+
+        other_name.setText(name);
+        other_hobby.setText(hobby);
 
         Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
         name = intent.getStringExtra("name");
         hobby = intent.getStringExtra("hobby");
-        Log.e("OtherActivity", "받아온 이름 : " + name + ", 취미 : " + hobby);
+        Log.e(TAG, "인텐트 id : " + id + ", 인텐트 이름 : " + name + ", 인텐트 취미 : " + hobby);
 
-        // 레트로핏으로 서버에서 값을 받아온다
-        getNameHobby(name, hobby);
+        other_name.setText(name);
+        other_hobby.setText(hobby);
 
-        back_btn.setOnClickListener(new View.OnClickListener()
+        update_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                finish();
+                // 수정 메서드
             }
         });
-    }
 
-    private void getNameHobby(String name, String hobby)
-    {
-        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        //Call<Person> call = apiInterface.getNameHobby(name, hobby);
-        Call<Person> call = apiInterface.getNameHobby(name, hobby);
-        call.enqueue(new Callback<Person>()
+        delete_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onResponse(@NonNull Call<Person> call, @NonNull Response<Person> response)
+            public void onClick(View view)
             {
-                if (response.isSuccessful() && response.body() != null)
-                {
-                    String getted_name = response.body().getName();
-                    String getted_hobby = response.body().getHobby();
-                    Log.e("getNameHobby()", "서버에서 이름 : " + getted_name + ", 서버에서 받아온 취미 : " + getted_hobby);
-
-                    get_name.setText(getted_name);
-                    get_hobby.setText(getted_hobby);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Person> call, @NonNull Throwable t)
-            {
-                Log.e("getNameHobby()", "에러 : " + t.getMessage());
+                // 삭제 메서드
             }
         });
     }

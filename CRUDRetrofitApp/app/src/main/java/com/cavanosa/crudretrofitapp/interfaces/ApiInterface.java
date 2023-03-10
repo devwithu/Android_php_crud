@@ -28,4 +28,12 @@ public interface ApiInterface
             @Field("name") String name,
             @Field("hobby") String hobby
     );
+
+    @FormUrlEncoded
+    @POST("example_update.php")
+    Call<Person> updatePerson(
+            @Field("id") int id,
+            @Field("name") String name,
+            @Field("hobby") String hobby
+    );
 }

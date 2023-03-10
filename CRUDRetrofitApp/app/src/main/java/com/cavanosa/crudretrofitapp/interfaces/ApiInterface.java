@@ -36,4 +36,11 @@ public interface ApiInterface
             @Field("name") String name,
             @Field("hobby") String hobby
     );
+
+    @FormUrlEncoded
+    @POST("example_delete.php")
+    Call<Person> deletePerson(
+            @Field("id") int id
+    );
+
 }

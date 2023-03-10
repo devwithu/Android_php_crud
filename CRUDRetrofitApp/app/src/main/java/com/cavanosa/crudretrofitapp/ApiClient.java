@@ -1,5 +1,6 @@
 package com.cavanosa.crudretrofitapp;
 
+import com.cavanosa.crudretrofitapp.utils.NullOnEmptyConverterFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,6 +22,7 @@ public class ApiClient
         {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    .addConverterFactory(new NullOnEmptyConverterFactory())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
